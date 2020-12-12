@@ -130,7 +130,7 @@ class ViewController: UIViewController {
             // Automatically stop motion data on G sensor shock
             // PENDING: Check instantaneous G's on all axes, instead of max.
             // PENDING: Require minimum rotation speed flag
-            if self.maxG > 1.3 {
+            /*if self.maxG > 1.3 {
                 
                 // Call stop count function, stop all sensors
                 self.stopCounting()
@@ -140,7 +140,7 @@ class ViewController: UIViewController {
                 
                 // Reinitialize maxG
                 self.maxG = 0.0
-            }
+            }*/
             
             
             
