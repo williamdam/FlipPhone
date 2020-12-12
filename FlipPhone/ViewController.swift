@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreMotion
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -21,6 +22,7 @@ class ViewController: UIViewController {
     var finishLine:Bool = true          // Flag for finish line
     var checkPoint:Bool = false         // Flag for check point
     var numRotations:Int = 0            // Number of rotations
+    var audioPlayer: AVAudioPlayer?     // Init audio player for chime
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +30,20 @@ class ViewController: UIViewController {
         // Set UILabels to invisible
         maxRotationSpeedLabel.alpha = 0.0
         numRotationsLabel.alpha = 0.0
-
     }
     
+    // Play sound
+    func playSound(sound: String, type: String) {
+        if let path = Bundle.main.path(forResource: sound, ofType: type) {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                audioPlayer?.play()
+            }
+            catch {
+                print("Could not play sound file.")
+            }
+        }
+    }
     
     // Set rotation passed halfway point at 3 radians (PENDING: Increase precision with pi)
     func setCheckPoint(_ rotationAngle:Double) {
@@ -115,13 +128,22 @@ class ViewController: UIViewController {
             }
             
             // Automatically stop motion data on G sensor shock
-            /*if self.maxG > 1.55 {
-                self.motion.stopAccelerometerUpdates()
-                self.motion.stopGyroUpdates()
-                self.motion.stopDeviceMotionUpdates()
-                self.maxRotationSpeedLabel.text = String(format: "%.2f rps", self.maxSpeed)
-                self.numRotationsLabel.text = String(self.numRotations)
-            }*/
+            // PENDING: Check instantaneous G's on all axes, instead of max.
+            // PENDING: Require minimum rotation speed flag
+            if self.maxG > 1.3 {
+                
+                // Call stop count function, stop all sensors
+                self.stopCounting()
+                
+                // Play chime
+                self.playSound(sound: "chime", type: "mp3")
+                
+                // Reinitialize maxG
+                self.maxG = 0.0
+            }
+            
+            
+            
         }
     }
     
@@ -151,6 +173,29 @@ class ViewController: UIViewController {
         }
     }
 
+    func stopCounting() {
+        
+        // Stop motion updates
+        motion.stopDeviceMotionUpdates()
+        motion.stopGyroUpdates()
+        motion.stopAccelerometerUpdates()
+        
+        // Set speed label to max rad/sec
+        maxRotationSpeedLabel.text = String(format: "%.2f rad/sec", self.maxSpeed)
+        
+        // Set num rotations label to total rotations
+        numRotationsLabel.text = String("\(numRotations) times")
+        
+        // Make both labels visible
+        maxRotationSpeedLabel.alpha = 1.0
+        numRotationsLabel.alpha = 1.0
+        
+        // Reset vars
+        self.maxSpeed = 0.0
+        self.numRotations = 0
+        
+    }
+    
     // Action: User presses start button
     // Description: Set labels to invisible.  Call all motion functions.
     @IBAction func startCountingButtonPressed(_ sender: UIButton) {
