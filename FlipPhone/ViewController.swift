@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var startCountingButton: UIButton!       // Button Start
     @IBOutlet weak var stopCountingButton: UIButton!        // Button Stop
-    @IBOutlet weak var maxRotationSpeedLabel: UILabel!      // Label Max Rotation Speed
+    @IBOutlet weak var greetingLabel: UILabel!      // Label Max Rotation Speed
     @IBOutlet weak var numRotationsLabel: UILabel!          // Label Num Rotations
     
     // Array to hold rotation data
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     // Returns: Void
     // Description: Void function sets labels to transparent
     func hideLabels() {
-        maxRotationSpeedLabel.alpha = 0.0
+        greetingLabel.alpha = 0.0
         numRotationsLabel.alpha = 0.0
     }
     
@@ -44,7 +44,7 @@ class ViewController: UIViewController {
     // Returns: Void
     // Description: Void function sets labels to full alpha
     func showLabels() {
-        maxRotationSpeedLabel.alpha = 1.0
+        greetingLabel.alpha = 1.0
         numRotationsLabel.alpha = 1.0
     }
     
@@ -180,6 +180,10 @@ class ViewController: UIViewController {
         }
     }
 
+    // Function: stopCounting()
+    // Args: None
+    // Returns: Void
+    // Description: Calls stop on all motion updates being used.
     func stopCounting() {
         
         // Stop motion updates
@@ -192,29 +196,43 @@ class ViewController: UIViewController {
         
     }
     
-    // Process array data
+    // Function: getNumRotations()
+    // Args: Double Array stores attitude data
+    // Returns: Int
+    // Description: Takes array arg of attitude data on y-axis and returns number
+    // of rotations.
     func getNumRotations(_ rotationArray: [Double]) -> Int {
         
-        var passedCheckPoint:Bool = false
-        var passedFinishLine:Bool = true
-        let lastElement = rotationArray.count - 1
-        var numRotations:Int = 0
+        var passedCheckPoint:Bool = false           // Checkpoint flag
+        var passedFinishLine:Bool = true            // Finish line flag
+        let lastElement = rotationArray.count - 1   // Last element in array
+        var numRotations:Int = 0                    // Counter for number of rotations
         
+        // Analyze all elements in array
         for i in 0...lastElement {
             
+            // Device attitude on y-axis in radians
             let position = rotationArray[i]
             
+            // Within checkpoint range
             if inCheckPointRange(position) {
+                
+                // Set vars if already passed finish line
                 if passedFinishLine {
-                    passedCheckPoint = true
-                    passedFinishLine = false
+                    passedCheckPoint = true     // Set checkpoint flag
+                    passedFinishLine = false    // Reset finish line flag
                 }
             }
+            
+            // Within finsh line range
             else if inFinishLineRange(position) {
+                
+                // Set vars if already passed check point
                 if passedCheckPoint {
-                    numRotations += 1                // Increment rotation counter
+                    numRotations += 1           // Increment rotation counter
+                    passedFinishLine = true     // Set finish line flag
                     passedCheckPoint = false    // Reset checkpoint flag
-                    passedFinishLine = true
+                    
                 }
             }
         }
@@ -227,11 +245,13 @@ class ViewController: UIViewController {
     // Description: Set labels to invisible.  Call all motion functions.
     @IBAction func startCountingButtonPressed(_ sender: UIButton) {
         
+        // Make start button invisible
         startCountingButton.alpha = 0.0
         
         // Make labels invisible
         hideLabels()
         
+        // Start all motion devices
         MyAttitude()
         MyGyro()
         MyAccel()
@@ -242,6 +262,7 @@ class ViewController: UIViewController {
     // Description: Stop all motion updates.
     @IBAction func stopCountingButtonPressed(_ sender: UIButton) {
         
+        // Show start button
         startCountingButton.alpha = 1.0
         
         // Stop all motion data
@@ -249,13 +270,28 @@ class ViewController: UIViewController {
         
         // Print array
         print(rotationData)
-        print("Processed Rotations: \(getNumRotations(rotationData))")
+        
+        // Process number of rotations and save to var
+        let numRotations = getNumRotations(rotationData)
+        print("Processed Rotations: \(numRotations)")
+        
+        // Set greeting based on numRotations
+        var greeting = "Meh."
+        
+        if numRotations > 5 {
+            greeting = "Wow!"
+        }
+        
+        // Set greeting label
+        greetingLabel.text = greeting
         
         // Set num rotations label to total rotations
-        numRotationsLabel.text = String("\(getNumRotations(rotationData)) times")
+        numRotationsLabel.text = String("\(numRotations) rotations")
         
+        // Display labels
         showLabels()
         
+        // Clear rotation data stored in array
         rotationData.removeAll()
     }
     

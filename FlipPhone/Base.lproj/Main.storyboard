@@ -41,8 +41,8 @@
                                     <action selector="stopCountingButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dt7-Z3-wnG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Max Rotations" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNV-ZX-fJ5">
-                                <rect key="frame" x="115" y="623" width="184" height="36"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Greeting" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNV-ZX-fJ5">
+                                <rect key="frame" x="151" y="623" width="112" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" systemColor="systemGreenColor"/>
@@ -64,7 +64,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <outlet property="maxRotationSpeedLabel" destination="DNV-ZX-fJ5" id="8gO-HE-Mmf"/>
+                        <outlet property="greetingLabel" destination="DNV-ZX-fJ5" id="8gO-HE-Mmf"/>
                         <outlet property="numRotationsLabel" destination="G5z-9a-xvH" id="1fk-zu-xuf"/>
                         <outlet property="startCountingButton" destination="UQo-9f-Rhh" id="8gU-1M-Mkj"/>
                         <outlet property="stopCountingButton" destination="Jzt-Wz-dBm" id="fZo-KU-UsB"/>
@@ -76,7 +76,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="FlipPhoneImage" width="1024" height="1024"/>
+        <image name="FlipPhoneImage" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
