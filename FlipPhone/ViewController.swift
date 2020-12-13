@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var maxRotationSpeedLabel: UILabel!      // Label Max Rotation Speed
     @IBOutlet weak var numRotationsLabel: UILabel!          // Label Num Rotations
     
+    // Array to hold rotation data
+    var rotationData: [Double] = []
+    
     var motion = CMMotionManager()      // Init motion manager
     var maxSpeed:Double = 0.0           // Max rotational speed
     var maxG:Double = 0.0               // Max G's
@@ -31,6 +34,7 @@ class ViewController: UIViewController {
         maxRotationSpeedLabel.alpha = 0.0
         numRotationsLabel.alpha = 0.0
     }
+    
     
     // Play sound
     func playSound(sound: String, type: String) {
@@ -168,6 +172,8 @@ class ViewController: UIViewController {
                 self.setCheckPoint(attitudeData.attitude.roll)
                 self.setFinishLine(attitudeData.attitude.roll)
                 
+                // Add roll position to array
+                self.rotationData.append(attitudeData.attitude.roll)
             }
             
         }
@@ -194,6 +200,21 @@ class ViewController: UIViewController {
         self.maxSpeed = 0.0
         self.numRotations = 0
         
+    }
+    
+    // Process array data
+    func processData(_ rotationArray: [Double]) {
+        
+        let lastElement = rotationArray.count - 1
+        
+        for i in 0...lastElement {
+            
+            let position = rotationArray[i]
+            setCheckPoint(position)
+            setFinishLine(position)
+            
+        }
+                
     }
     
     // Action: User presses start button
@@ -232,6 +253,11 @@ class ViewController: UIViewController {
         // Reset vars
         self.maxSpeed = 0.0
         self.numRotations = 0
+        
+        // Print array
+        print(rotationData)
+        processData(rotationData)
+        print("Processed Rotations: \(numRotations)")
     }
     
     
