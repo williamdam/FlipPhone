@@ -28,6 +28,9 @@ class ViewController: UIViewController {
         
         // Set UILabels to invisible
         hideLabels()
+        
+        // Display start button
+        showStartButton()
     }
     
     // Function: hideLabels()
@@ -37,6 +40,24 @@ class ViewController: UIViewController {
     func hideLabels() {
         greetingLabel.alpha = 0.0
         numRotationsLabel.alpha = 0.0
+    }
+    
+    // Function: showStartButton()
+    // Args: None
+    // Returns: Void
+    // Description: Shows start button and hides stop button
+    func showStartButton() {
+        startCountingButton.alpha = 1.0
+        stopCountingButton.alpha = 0.0
+    }
+    
+    // Function: showStopButton()
+    // Args: None
+    // Returns: Void
+    // Description: Shows stop button and hides start button
+    func showStopButton() {
+        startCountingButton.alpha = 0.0
+        stopCountingButton.alpha = 1.0
     }
     
     // Function: showLabels()
@@ -250,8 +271,8 @@ class ViewController: UIViewController {
     // Description: Set labels to invisible.  Call all motion functions.
     @IBAction func startCountingButtonPressed(_ sender: UIButton) {
         
-        // Make start button invisible
-        startCountingButton.alpha = 0.0
+        // Display stop button
+        showStopButton()
         
         // Make labels invisible
         hideLabels()
@@ -270,8 +291,8 @@ class ViewController: UIViewController {
     // Description: Stop all motion updates.
     @IBAction func stopCountingButtonPressed(_ sender: UIButton) {
         
-        // Show start button
-        startCountingButton.alpha = 1.0
+        // Display start button
+        showStartButton()
         
         // Stop all motion data
         stopCounting()
