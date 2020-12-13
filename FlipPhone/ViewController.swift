@@ -187,9 +187,12 @@ class ViewController: UIViewController {
     func stopCounting() {
         
         // Stop motion updates
-        motion.stopDeviceMotionUpdates()
-        motion.stopGyroUpdates()
-        motion.stopAccelerometerUpdates()
+        if motion.isDeviceMotionActive {
+            motion.stopDeviceMotionUpdates()
+            motion.stopGyroUpdates()
+            motion.stopAccelerometerUpdates()
+        }
+        
         
         // Play chime
         self.playSound(sound: "chime", type: "mp3")
@@ -209,34 +212,36 @@ class ViewController: UIViewController {
         var numRotations:Int = 0                    // Counter for number of rotations
         
         // Analyze all elements in array
-        for i in 0...lastElement {
-            
-            // Device attitude on y-axis in radians
-            let position = rotationArray[i]
-            
-            // Within checkpoint range
-            if inCheckPointRange(position) {
+        if rotationArray.count != 0 {
+            for i in 0...lastElement {
                 
-                // Set vars if already passed finish line
-                if passedFinishLine {
-                    passedCheckPoint = true     // Set checkpoint flag
-                    passedFinishLine = false    // Reset finish line flag
-                }
-            }
-            
-            // Within finsh line range
-            else if inFinishLineRange(position) {
+                // Device attitude on y-axis in radians
+                let position = rotationArray[i]
                 
-                // Set vars if already passed check point
-                if passedCheckPoint {
-                    numRotations += 1           // Increment rotation counter
-                    passedFinishLine = true     // Set finish line flag
-                    passedCheckPoint = false    // Reset checkpoint flag
+                // Within checkpoint range
+                if inCheckPointRange(position) {
                     
+                    // Set vars if already passed finish line
+                    if passedFinishLine {
+                        passedCheckPoint = true     // Set checkpoint flag
+                        passedFinishLine = false    // Reset finish line flag
+                    }
+                }
+                
+                // Within finsh line range
+                else if inFinishLineRange(position) {
+                    
+                    // Set vars if already passed check point
+                    if passedCheckPoint {
+                        numRotations += 1           // Increment rotation counter
+                        passedFinishLine = true     // Set finish line flag
+                        passedCheckPoint = false    // Reset checkpoint flag
+                        
+                    }
                 }
             }
         }
-        
+    
         return numRotations
                 
     }
@@ -252,9 +257,12 @@ class ViewController: UIViewController {
         hideLabels()
         
         // Start all motion devices
-        MyAttitude()
-        MyGyro()
-        MyAccel()
+        if !motion.isDeviceMotionActive {
+            MyAttitude()
+            MyGyro()
+            MyAccel()
+        }
+        
         
     }
     
