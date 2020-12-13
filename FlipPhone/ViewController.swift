@@ -21,22 +21,37 @@ class ViewController: UIViewController {
     
     var motion = CMMotionManager()      // Init motion manager
     var maxSpeed:Double = 0.0           // Max rotational speed
-    var maxG:Double = 0.0               // Max G's
-    var finishLine:Bool = true          // Flag for finish line
-    var checkPoint:Bool = false         // Flag for check point
-    var numRotations:Int = 0            // Number of rotations
     var audioPlayer: AVAudioPlayer?     // Init audio player for chime
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set UILabels to invisible
+        hideLabels()
+    }
+    
+    // Function: hideLabels()
+    // Args: None
+    // Returns: Void
+    // Description: Void function sets labels to transparent
+    func hideLabels() {
         maxRotationSpeedLabel.alpha = 0.0
         numRotationsLabel.alpha = 0.0
     }
     
+    // Function: showLabels()
+    // Args: None
+    // Returns: Void
+    // Description: Void function sets labels to full alpha
+    func showLabels() {
+        maxRotationSpeedLabel.alpha = 1.0
+        numRotationsLabel.alpha = 1.0
+    }
     
-    // Play sound
+    // Function: playSound()
+    // Args: String filename, String file extension
+    // Returns: Void
+    // Description: Void function plays soundfile passed in args.
     func playSound(sound: String, type: String) {
         if let path = Bundle.main.path(forResource: sound, ofType: type) {
             do {
@@ -49,33 +64,43 @@ class ViewController: UIViewController {
         }
     }
     
-    // Set rotation passed halfway point at 3 radians (PENDING: Increase precision with pi)
-    func setCheckPoint(_ rotationAngle:Double) {
+    // Function: inCheckPointRange()
+    // Args: Double y-axis orientation in radians.
+    // Returns: Bool.  True if within halfway point range.
+    // Description: Bool function takes device orientation on y-axis and returns
+    // true if within range of halfway point at pi radians.
+    func inCheckPointRange(_ radians:Double) -> Bool {
         
-        // Checkpoint located between 2.8 and 3.2 radians.
-        // If finishLine flagged, flag checkPoint, and unflag finishLine
-        if abs(rotationAngle) > 2.8 && abs(rotationAngle) < 3.2 && self.finishLine == true {
+        let halfwayPoint = 3.14     // pi rad = 180 degrees
+        
+        // Checkpoint located at pi radians, +/- 0.2 rad
+        if abs(radians) > (halfwayPoint - 0.2) && abs(radians) < (halfwayPoint + 0.2) {
             
-            self.checkPoint = true
-            self.finishLine = false
+            return true
+            
         }
         
-
+        return false
+        
     }
     
-    // Set rotation passed finish line at 0 radians (PENDING: Increase precision with pi)
-    func setFinishLine(_ rotationAngle:Double) {
+    // Function: inFinishLineRange()
+    // Args: Double y-axis orientation in radians.
+    // Returns: Bool.  True if within origin range.
+    // Description: Bool function takes device orientation on y-axis and returns
+    // true if within range of origin at 0.0 radians.
+    func inFinishLineRange(_ radians:Double) -> Bool {
         
-        // Finish line located at 0 radians, threshold +/- 0.8
-        // If checkPoint flagged, flag finishLine, and unflag checkPoint
-        if abs(rotationAngle) > 0 && abs(rotationAngle) < 0.8 && self.checkPoint == true {
+        let finishLine = 0.0     // 0.0 radians
+        
+        // Checkpoint located at pi radians, +/- 0.2 rad
+        if abs(radians) > (finishLine - 0.2) && abs(radians) < (finishLine + 0.2) {
             
-            self.finishLine = true
-            self.checkPoint = false
+            return true
             
-            // Increment counter
-            self.numRotations += 1
         }
+        
+        return false
         
     }
     
@@ -97,12 +122,6 @@ class ViewController: UIViewController {
                 print(trueData)
                 print("Rotation rate y: \(trueData.rotationRate.y)")
                 
-                // Update maxSpeed with rotationRate
-                if abs(trueData.rotationRate.y) > self.maxSpeed {
-                    
-                    self.maxSpeed = abs(trueData.rotationRate.y)    // (PENDING: Convert to rps or rpm)
-                }
-                
             }
         }
     }
@@ -121,32 +140,14 @@ class ViewController: UIViewController {
             if let accelData = data {
                 
                 // Print to console
-                print("Accel: \(accelData)")
-                
-                // Update maxG with number of G's
-                if accelData.acceleration.z > self.maxG {
-                    
-                    self.maxG = accelData.acceleration.z        // (PENDING: Check data for +/- G's)
-                }
+                print("Accel: \(accelData)")    // Access acceleration with .acceleration
                 
             }
             
             // Automatically stop motion data on G sensor shock
             // PENDING: Check instantaneous G's on all axes, instead of max.
             // PENDING: Require minimum rotation speed flag
-            /*if self.maxG > 1.3 {
-                
-                // Call stop count function, stop all sensors
-                self.stopCounting()
-                
-                // Play chime
-                self.playSound(sound: "chime", type: "mp3")
-                
-                // Reinitialize maxG
-                self.maxG = 0.0
-            }*/
-            
-            
+
             
         }
     }
@@ -169,8 +170,8 @@ class ViewController: UIViewController {
                 print("Attitude: \(attitudeData.attitude)")
                 
                 // Call helper functions
-                self.setCheckPoint(attitudeData.attitude.roll)
-                self.setFinishLine(attitudeData.attitude.roll)
+                /*self.setCheckPoint(attitudeData.attitude.roll)
+                self.setFinishLine(attitudeData.attitude.roll)*/
                 
                 // Add roll position to array
                 self.rotationData.append(attitudeData.attitude.roll)
@@ -186,34 +187,39 @@ class ViewController: UIViewController {
         motion.stopGyroUpdates()
         motion.stopAccelerometerUpdates()
         
-        // Set speed label to max rad/sec
-        maxRotationSpeedLabel.text = String(format: "%.2f rad/sec", self.maxSpeed)
-        
-        // Set num rotations label to total rotations
-        numRotationsLabel.text = String("\(numRotations) times")
-        
-        // Make both labels visible
-        maxRotationSpeedLabel.alpha = 1.0
-        numRotationsLabel.alpha = 1.0
-        
-        // Reset vars
-        self.maxSpeed = 0.0
-        self.numRotations = 0
+        // Play chime
+        self.playSound(sound: "chime", type: "mp3")
         
     }
     
     // Process array data
-    func processData(_ rotationArray: [Double]) {
+    func getNumRotations(_ rotationArray: [Double]) -> Int {
         
+        var passedCheckPoint:Bool = false
+        var passedFinishLine:Bool = true
         let lastElement = rotationArray.count - 1
+        var numRotations:Int = 0
         
         for i in 0...lastElement {
             
             let position = rotationArray[i]
-            setCheckPoint(position)
-            setFinishLine(position)
             
+            if inCheckPointRange(position) {
+                if passedFinishLine {
+                    passedCheckPoint = true
+                    passedFinishLine = false
+                }
+            }
+            else if inFinishLineRange(position) {
+                if passedCheckPoint {
+                    numRotations += 1                // Increment rotation counter
+                    passedCheckPoint = false    // Reset checkpoint flag
+                    passedFinishLine = true
+                }
+            }
         }
+        
+        return numRotations
                 
     }
     
@@ -221,9 +227,10 @@ class ViewController: UIViewController {
     // Description: Set labels to invisible.  Call all motion functions.
     @IBAction func startCountingButtonPressed(_ sender: UIButton) {
         
+        startCountingButton.alpha = 0.0
+        
         // Make labels invisible
-        maxRotationSpeedLabel.alpha = 0.0
-        numRotationsLabel.alpha = 0.0
+        hideLabels()
         
         MyAttitude()
         MyGyro()
@@ -235,29 +242,21 @@ class ViewController: UIViewController {
     // Description: Stop all motion updates.
     @IBAction func stopCountingButtonPressed(_ sender: UIButton) {
         
-        // Stop motion updates
-        motion.stopDeviceMotionUpdates()
-        motion.stopGyroUpdates()
-        motion.stopAccelerometerUpdates()
+        startCountingButton.alpha = 1.0
         
-        // Set speed label to max rad/sec
-        maxRotationSpeedLabel.text = String(format: "%.2f rad/sec", self.maxSpeed)
-        
-        // Set num rotations label to total rotations
-        numRotationsLabel.text = String("\(numRotations) times")
-        
-        // Make both labels visible
-        maxRotationSpeedLabel.alpha = 1.0
-        numRotationsLabel.alpha = 1.0
-        
-        // Reset vars
-        self.maxSpeed = 0.0
-        self.numRotations = 0
+        // Stop all motion data
+        stopCounting()
         
         // Print array
         print(rotationData)
-        processData(rotationData)
-        print("Processed Rotations: \(numRotations)")
+        print("Processed Rotations: \(getNumRotations(rotationData))")
+        
+        // Set num rotations label to total rotations
+        numRotationsLabel.text = String("\(getNumRotations(rotationData)) times")
+        
+        showLabels()
+        
+        rotationData.removeAll()
     }
     
     
