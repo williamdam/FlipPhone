@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var startCountingButton: UIButton!       // Button Start
     @IBOutlet weak var stopCountingButton: UIButton!        // Button Stop
-    @IBOutlet weak var greetingLabel: UILabel!      // Label Max Rotation Speed
+    @IBOutlet weak var greetingLabel: UILabel!              // Label Max Rotation Speed
     @IBOutlet weak var numRotationsLabel: UILabel!          // Label Num Rotations
     
     // Array to hold rotation data
@@ -278,8 +278,16 @@ class ViewController: UIViewController {
         // Set greeting based on numRotations
         var greeting = "Meh."
         
-        if numRotations > 5 {
+        switch numRotations {
+        case 0:
+            greeting = "You didn't even flip it!"
+        case 1..<3:
+            greeting = "Meh."
+        case 3..<5:
+            greeting = "Pretty good!"
+        default:
             greeting = "Wow!"
+            
         }
         
         // Set greeting label
