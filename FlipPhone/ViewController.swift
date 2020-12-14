@@ -228,7 +228,6 @@ class ViewController: UIViewController {
     func getNumRotations(_ rotationArray: [Double]) -> Int {
         
         var passedCheckPoint:Bool = false           // Checkpoint flag
-        var passedFinishLine:Bool = true            // Finish line flag
         let lastElement = rotationArray.count - 1   // Last element in array
         var numRotations:Int = 0                    // Counter for number of rotations
         
@@ -239,26 +238,19 @@ class ViewController: UIViewController {
                 // Device attitude on y-axis in radians
                 let position = rotationArray[i]
                 
-                // Within checkpoint range
-                if inCheckPointRange(position) {
+                // Within finish line range and already passed checkpoint
+                if inFinishLineRange(position) && passedCheckPoint == true {
                     
-                    // Set vars if already passed finish line
-                    if passedFinishLine {
-                        passedCheckPoint = true     // Set checkpoint flag
-                        passedFinishLine = false    // Reset finish line flag
-                    }
+                    numRotations += 1           // Increment rotation counter
+                    passedCheckPoint = false    // Reset checkpoint flag
+
                 }
                 
-                // Within finsh line range
-                else if inFinishLineRange(position) {
+                // Within checkpoint range for first time
+                else if inCheckPointRange(position) && passedCheckPoint == false {
                     
-                    // Set vars if already passed check point
-                    if passedCheckPoint {
-                        numRotations += 1           // Increment rotation counter
-                        passedFinishLine = true     // Set finish line flag
-                        passedCheckPoint = false    // Reset checkpoint flag
-                        
-                    }
+                    passedCheckPoint = true     // Set checkpoint flag
+                    
                 }
             }
         }
