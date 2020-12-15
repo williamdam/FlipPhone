@@ -131,6 +131,9 @@ class ViewController: UIViewController {
     // Description: Gets gyroscope data from device and sets maxSpeed with rad/sec
     func MyGyro() {
         
+        // Flag to track min speed satisfied
+        var minSpeedReached:Bool = false
+        
         // Check for change every 0.01  sec
         motion.gyroUpdateInterval = 0.01
         
@@ -143,6 +146,27 @@ class ViewController: UIViewController {
                 print(trueData)
                 print("Rotation rate y: \(trueData.rotationRate.y)")
                 
+                // Set min speed flag true if min speed reached
+                if minSpeedReached == false && trueData.rotationRate.y > 7 {
+                    
+                    minSpeedReached = true
+                    
+                }
+                
+                // Stop count and display results when rotation stops
+                if minSpeedReached == true && abs(trueData.rotationRate.y) < 0.1 {
+                    // Display start button
+                    self.showStartButton()
+                    
+                    // Stop all motion data
+                    self.stopCounting()
+                    
+                    // Print array
+                    print(self.rotationData)
+                    
+                    // Show results
+                    self.showResults()
+                }
             }
         }
     }
@@ -259,6 +283,46 @@ class ViewController: UIViewController {
                 
     }
     
+    // Function: showResults()
+    // Args: None
+    // Returns: Void
+    // Description: Calls getNumRotations() on data array to get num rotations.
+    // Switch statement generates greeting based on num rotations.  Display
+    // text label with results.  Clear array.
+    func showResults() {
+        
+        // Process number of rotations and save to var
+        let numRotations = getNumRotations(rotationData)
+        print("Processed Rotations: \(numRotations)")
+        
+        // Set greeting based on numRotations
+        var greeting = "Meh."
+        
+        switch numRotations {
+        case 0:
+            greeting = "You didn't even flip it!"
+        case 1..<3:
+            greeting = "Meh."
+        case 3..<5:
+            greeting = "Pretty good!"
+        default:
+            greeting = "Wow!"
+            
+        }
+        
+        // Set greeting label
+        greetingLabel.text = greeting
+        
+        // Set num rotations label to total rotations
+        numRotationsLabel.text = String("\(numRotations) rotations")
+        
+        // Display labels
+        showLabels()
+        
+        // Clear rotation data stored in array
+        rotationData.removeAll()
+    }
+    
     // Action: User presses start button
     // Description: Set labels to invisible.  Call all motion functions.
     @IBAction func startCountingButtonPressed(_ sender: UIButton) {
@@ -292,36 +356,9 @@ class ViewController: UIViewController {
         // Print array
         print(rotationData)
         
-        // Process number of rotations and save to var
-        let numRotations = getNumRotations(rotationData)
-        print("Processed Rotations: \(numRotations)")
+        // Show results
+        showResults()
         
-        // Set greeting based on numRotations
-        var greeting = "Meh."
-        
-        switch numRotations {
-        case 0:
-            greeting = "You didn't even flip it!"
-        case 1..<3:
-            greeting = "Meh."
-        case 3..<5:
-            greeting = "Pretty good!"
-        default:
-            greeting = "Wow!"
-            
-        }
-        
-        // Set greeting label
-        greetingLabel.text = greeting
-        
-        // Set num rotations label to total rotations
-        numRotationsLabel.text = String("\(numRotations) rotations")
-        
-        // Display labels
-        showLabels()
-        
-        // Clear rotation data stored in array
-        rotationData.removeAll()
     }
     
     
