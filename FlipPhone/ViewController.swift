@@ -143,7 +143,7 @@ class ViewController: UIViewController {
             if let trueData = data {
                 
                 // Print to console
-                print(trueData)
+                print("Rotation: \(trueData)")
                 print("Rotation rate y: \(trueData.rotationRate.y)")
                 
                 // Set min speed flag true if min speed reached
@@ -185,14 +185,9 @@ class ViewController: UIViewController {
             if let accelData = data {
                 
                 // Print to console
-                print("Accel: \(accelData)")    // Access acceleration with .acceleration
+                print("Acceleration: \(accelData)")    // Access acceleration with .acceleration
                 
             }
-            
-            // Automatically stop motion data on G sensor shock
-            // PENDING: Check instantaneous G's on all axes, instead of max.
-            // PENDING: Require minimum rotation speed flag
-
             
         }
     }
@@ -214,10 +209,6 @@ class ViewController: UIViewController {
                 // Print to console
                 print("Attitude: \(attitudeData.attitude)")
                 
-                // Call helper functions
-                /*self.setCheckPoint(attitudeData.attitude.roll)
-                self.setFinishLine(attitudeData.attitude.roll)*/
-                
                 // Add roll position to array
                 self.rotationData.append(attitudeData.attitude.roll)
             }
@@ -237,7 +228,6 @@ class ViewController: UIViewController {
             motion.stopGyroUpdates()
             motion.stopAccelerometerUpdates()
         }
-        
         
         // Play chime
         self.playSound(sound: "chime", type: "mp3")
