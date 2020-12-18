@@ -115,7 +115,7 @@ class ViewController: UIViewController {
         let finishLine = 0.0     // 0.0 radians
         
         // Checkpoint located at pi radians, +/- 0.2 rad
-        if abs(radians) > (finishLine - 0.2) && abs(radians) < (finishLine + 0.2) {
+        if abs(radians) > (finishLine - 0.25) && abs(radians) < (finishLine + 0.25) {
             
             return true
             
