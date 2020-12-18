@@ -303,8 +303,14 @@ class ViewController: UIViewController {
         // Set greeting label
         greetingLabel.text = greeting
         
+        // Amend string with singular or plural
+        var changeToPlural = "s"
+        if numRotations == 1 {
+            changeToPlural = ""
+        }
+        
         // Set num rotations label to total rotations
-        numRotationsLabel.text = String("\(numRotations) rotations")
+        numRotationsLabel.text = String("\(numRotations) rotation\(changeToPlural)")
         
         // Display labels
         showLabels()

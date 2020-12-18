@@ -17,9 +17,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQo-9f-Rhh">
-                                <rect key="frame" x="139.5" y="430" width="135" height="36"/>
+                                <rect key="frame" x="117" y="423" width="180" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <state key="normal" title="Start Counting">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -28,9 +28,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jzt-Wz-dBm">
-                                <rect key="frame" x="141" y="430" width="132" height="36"/>
+                                <rect key="frame" x="117" y="423" width="180" height="50"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="3bD-EQ-90t"/>
+                                    <constraint firstAttribute="height" constant="50" id="gPD-2F-YmU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <state key="normal" title="Stop Counting">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -72,12 +76,14 @@
                             <constraint firstItem="UQo-9f-Rhh" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Jdp-Bt-H11"/>
                             <constraint firstAttribute="bottom" secondItem="6Sx-8z-UNR" secondAttribute="bottom" id="KKs-KO-Yrr"/>
                             <constraint firstAttribute="trailing" secondItem="6Sx-8z-UNR" secondAttribute="trailing" id="KbN-Gd-FMv"/>
+                            <constraint firstItem="UQo-9f-Rhh" firstAttribute="width" secondItem="Jzt-Wz-dBm" secondAttribute="width" id="OMP-Pg-G8u"/>
                             <constraint firstItem="DNV-ZX-fJ5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ro0-nm-T0k"/>
                             <constraint firstItem="3FS-bh-nSF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="S0H-GG-EWg"/>
                             <constraint firstItem="6Sx-8z-UNR" firstAttribute="top" secondItem="G5z-9a-xvH" secondAttribute="bottom" constant="40" id="UgE-ge-6XF"/>
                             <constraint firstItem="3FS-bh-nSF" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="W0k-6Q-CnC"/>
                             <constraint firstItem="UQo-9f-Rhh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WNi-Qo-Dla"/>
                             <constraint firstItem="Jzt-Wz-dBm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ZiP-TO-I0N"/>
+                            <constraint firstItem="UQo-9f-Rhh" firstAttribute="height" secondItem="Jzt-Wz-dBm" secondAttribute="height" id="ktb-qI-vcB"/>
                             <constraint firstItem="Jzt-Wz-dBm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kvA-ie-EvA"/>
                             <constraint firstItem="G5z-9a-xvH" firstAttribute="top" secondItem="DNV-ZX-fJ5" secondAttribute="bottom" constant="15" id="lLM-2j-aj0"/>
                         </constraints>
