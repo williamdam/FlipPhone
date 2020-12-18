@@ -16,9 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQo-9f-Rhh">
-                                <rect key="frame" x="108" y="486" width="199" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQo-9f-Rhh">
+                                <rect key="frame" x="139.5" y="430" width="135" height="36"/>
                                 <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <state key="normal" title="Start Counting">
@@ -28,9 +27,8 @@
                                     <action selector="startCountingButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GOh-ew-U0S"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jzt-Wz-dBm">
-                                <rect key="frame" x="108" y="486" width="199" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jzt-Wz-dBm">
+                                <rect key="frame" x="141" y="430" width="132" height="36"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <state key="normal" title="Stop Counting">
@@ -41,23 +39,27 @@
                                     <action selector="stopCountingButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dt7-Z3-wnG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Greeting" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNV-ZX-fJ5">
-                                <rect key="frame" x="20" y="623" width="374" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <color key="textColor" systemColor="systemYellowColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Greeting" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNV-ZX-fJ5">
+                                <rect key="frame" x="166" y="731" width="82" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" red="0.96078431372549022" green="0.70980392156862748" blue="0.30980392156862746" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Number Rotations" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G5z-9a-xvH">
-                                <rect key="frame" x="90" y="678" width="234" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number Rotations" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G5z-9a-xvH">
+                                <rect key="frame" x="90" y="770" width="234" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flip-phone-starburst-border" translatesAutoresizingMaskIntoConstraints="NO" id="3FS-bh-nSF">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="starburst-top" translatesAutoresizingMaskIntoConstraints="NO" id="3FS-bh-nSF">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="8yP-2d-1M9"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="starburst-bottom" translatesAutoresizingMaskIntoConstraints="NO" id="6Sx-8z-UNR">
+                                <rect key="frame" x="0.0" y="846" width="414" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="g76-M2-69K"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -65,8 +67,19 @@
                         <color key="backgroundColor" red="1" green="0.99834428722125723" blue="0.93167259992193407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="3FS-bh-nSF" secondAttribute="trailing" id="3pD-Qu-Ee3"/>
+                            <constraint firstItem="G5z-9a-xvH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CLF-SF-2G7"/>
+                            <constraint firstItem="6Sx-8z-UNR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="IBw-sZ-hvn"/>
+                            <constraint firstItem="UQo-9f-Rhh" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Jdp-Bt-H11"/>
+                            <constraint firstAttribute="bottom" secondItem="6Sx-8z-UNR" secondAttribute="bottom" id="KKs-KO-Yrr"/>
+                            <constraint firstAttribute="trailing" secondItem="6Sx-8z-UNR" secondAttribute="trailing" id="KbN-Gd-FMv"/>
+                            <constraint firstItem="DNV-ZX-fJ5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ro0-nm-T0k"/>
                             <constraint firstItem="3FS-bh-nSF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="S0H-GG-EWg"/>
+                            <constraint firstItem="6Sx-8z-UNR" firstAttribute="top" secondItem="G5z-9a-xvH" secondAttribute="bottom" constant="40" id="UgE-ge-6XF"/>
                             <constraint firstItem="3FS-bh-nSF" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="W0k-6Q-CnC"/>
+                            <constraint firstItem="UQo-9f-Rhh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WNi-Qo-Dla"/>
+                            <constraint firstItem="Jzt-Wz-dBm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ZiP-TO-I0N"/>
+                            <constraint firstItem="Jzt-Wz-dBm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kvA-ie-EvA"/>
+                            <constraint firstItem="G5z-9a-xvH" firstAttribute="top" secondItem="DNV-ZX-fJ5" secondAttribute="bottom" constant="15" id="lLM-2j-aj0"/>
                         </constraints>
                     </view>
                     <connections>
@@ -82,12 +95,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="flip-phone-starburst-border" width="1400" height="161"/>
+        <image name="starburst-bottom" width="1400" height="232"/>
+        <image name="starburst-top" width="1400" height="161"/>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
