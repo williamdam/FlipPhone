@@ -21,11 +21,16 @@ class ViewController: UIViewController {
     // Array to hold rotation data
     var rotationData: [Double] = []
     
+    var gameMode: Int = 0               // 0 = max flips, 1 = always up, 2 = guess it
+    var alwaysUpFlips: Int = 0          // Count number of times always up
     var motion = CMMotionManager()      // Init motion manager
     var audioPlayer: AVAudioPlayer?     // Init audio player for chime
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapToDismissKeyboard))
+                view.addGestureRecognizer(tap) // Add gesture recognizer to background view
         
         // Set UILabels to invisible
         hideLabels()
@@ -38,7 +43,7 @@ class ViewController: UIViewController {
     // Function: hideGuessFlipsTextField()
     // Args: None
     // Returns: Void
-    // Description: Void function sets guessFlipsTextField to transparent
+    // Description: Void function hides guess field
     func hideGuessFlipsTextField() {
         guessFlipsTextField.alpha = 0.0
     }
@@ -46,9 +51,11 @@ class ViewController: UIViewController {
     // Function: showGuessFlipsTextField()
     // Args: None
     // Returns: Void
-    // Description: Void function shows guessFlipsTextField
+    // Description: Void function shows guess field
     func showGuessFlipsTextField() {
+        
         guessFlipsTextField.alpha = 1.0
+        
     }
     
     // Function: hideLabels()
@@ -171,8 +178,18 @@ class ViewController: UIViewController {
                     
                 }
                 
+                if self.gameMode == 1 && minSpeedReached == true && abs(trueData.rotationRate.y) < 0.1 {
+                    
+                    // Show results
+                    self.showResults()
+                    
+                    minSpeedReached = false
+                    
+                }
+                
                 // Stop count and display results when rotation stops
-                if minSpeedReached == true && abs(trueData.rotationRate.y) < 0.1 {
+                else if minSpeedReached == true && abs(trueData.rotationRate.y) < 0.1 {
+                    
                     // Display start button
                     self.showStartButton()
                     
@@ -248,7 +265,7 @@ class ViewController: UIViewController {
         }
         
         // Play chime
-        self.playSound(sound: "chime", type: "mp3")
+        // self.playSound(sound: "chime", type: "mp3")
         
     }
     
@@ -314,13 +331,7 @@ class ViewController: UIViewController {
         return false
     }
     
-    // Function: showResults()
-    // Args: None
-    // Returns: Void
-    // Description: Calls getNumRotations() on data array to get num rotations.
-    // Switch statement generates greeting based on num rotations.  Display
-    // text label with results.  Clear array.
-    func showResults() {
+    func gameMode0() {
         
         // Process number of rotations and save to var
         let numRotations = getNumRotations(rotationData)
@@ -356,25 +367,121 @@ class ViewController: UIViewController {
         // Display labels
         showLabels()
         
+        self.playSound(sound: "chime", type: "mp3")
+        
         // Clear rotation data stored in array
         rotationData.removeAll()
+        
+    }
+    
+    func gameMode1() {
+        
+        if deviceIsUp(rotationData) {
+            alwaysUpFlips += 1
+            greetingLabel.text = "Nice! Keep going."
+            self.playSound(sound: "chime", type: "mp3")
+            
+        }
+        else {
+            stopCounting()
+            greetingLabel.text = "Aww. Face down."
+            self.playSound(sound: "alert", type: "mp3")
+            showStartButton()
+            rotationData.removeAll()
+        }
+        
+        // Amend string with singular or plural
+        var changeToPlural = "s"
+        if alwaysUpFlips == 1 {
+            changeToPlural = ""
+        }
+        numRotationsLabel.text = String("\(alwaysUpFlips) flip\(changeToPlural)")
+        
+        showLabels()
+    }
+    
+    func gameMode2() {
+        
+        // Process number of rotations and save to var
+        let numRotations = getNumRotations(rotationData)
+        print("Processed Rotations: \(numRotations)")
+        
+        let originalGuess = Int(guessFlipsTextField.text ?? "0")
+        
+        if numRotations == originalGuess {
+            greetingLabel.text = "YOU WIN!"
+            self.playSound(sound: "chime", type: "mp3")
+        }
+        else {
+            greetingLabel.text = "YOU LOSE."
+            self.playSound(sound: "alert", type: "mp3")
+        }
+        
+        // Amend string with singular or plural
+        var changeToPlural = "s"
+        if numRotations == 1 {
+            changeToPlural = ""
+        }
+        
+        // Set num rotations label to total rotations
+        numRotationsLabel.text = String("\(numRotations) rotation\(changeToPlural)")
+        
+        // Display labels
+        showLabels()
+        
+        // Clear rotation data stored in array
+        rotationData.removeAll()
+        
+    }
+    
+    
+    // Function: showResults()
+    // Args: None
+    // Returns: Void
+    // Description: Calls getNumRotations() on data array to get num rotations.
+    // Switch statement generates greeting based on num rotations.  Display
+    // text label with results.  Clear array.
+    func showResults() {
+        
+        if gameMode == 0 {
+            gameMode0()
+        }
+        else if gameMode == 1 {
+            gameMode1()
+        }
+        else {
+            gameMode2()
+        }
+        
     }
     
     // Action: User selects game mode
-    // Description:
+    // Description: Switch between game modes. Action picks up on change.
     @IBAction func gameModeOptionSlider(_ sender: UISegmentedControl) {
+        
+        stopCounting()
+        rotationData.removeAll()
+        alwaysUpFlips = 0
+        print("Cleared Rotation Data and Always Up Flip Counter")
+        
+        hideLabels()
+        showStartButton()
         
         let gameMode = sender.selectedSegmentIndex
         
         switch gameMode {
         case 0:
             hideGuessFlipsTextField()
+            self.gameMode = 0
         case 1:
             hideGuessFlipsTextField()
+            self.gameMode = 1
         case 2:
             showGuessFlipsTextField()
+            self.gameMode = 2
         default:
             hideGuessFlipsTextField()
+            self.gameMode = 0
         }
         
     }
@@ -389,6 +496,8 @@ class ViewController: UIViewController {
         
         // Make labels invisible
         hideLabels()
+        
+        alwaysUpFlips = 0
         
         // Start all motion devices
         if !motion.isDeviceMotionActive {
@@ -418,6 +527,13 @@ class ViewController: UIViewController {
         
     }
     
+    @objc func tapToDismissKeyboard() {
+        
+        // Dismiss keyboard
+        guessFlipsTextField.resignFirstResponder()
+        
+    }
     
 }
+
 

@@ -81,10 +81,9 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Guess # of Flips" textAlignment="center" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="SVb-4g-V9e">
                                                 <rect key="frame" x="0.0" y="0.0" width="314" height="50"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="SVb-4g-V9e" firstAttribute="top" secondItem="xjg-QO-eLu" secondAttribute="top" id="B7l-Qq-P3g"/>
                                             <constraint firstAttribute="trailing" secondItem="SVb-4g-V9e" secondAttribute="trailing" id="cTJ-yr-pk0"/>
@@ -111,7 +110,7 @@
                                                 <rect key="frame" x="0.0" y="5" width="314" height="40"/>
                                                 <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                                                <state key="normal" title="Press Before Flip">
+                                                <state key="normal" title="Press to Start">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
