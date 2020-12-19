@@ -11,6 +11,8 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var gameModeSlider: UISegmentedControl!  // Slider of Game Modes
+    @IBOutlet weak var guessFlipsTextField: UITextField!
     @IBOutlet weak var startCountingButton: UIButton!       // Button Start
     @IBOutlet weak var stopCountingButton: UIButton!        // Button Stop
     @IBOutlet weak var greetingLabel: UILabel!              // Label Max Rotation Speed
@@ -20,7 +22,6 @@ class ViewController: UIViewController {
     var rotationData: [Double] = []
     
     var motion = CMMotionManager()      // Init motion manager
-    var maxSpeed:Double = 0.0           // Max rotational speed
     var audioPlayer: AVAudioPlayer?     // Init audio player for chime
     
     override func viewDidLoad() {
@@ -28,9 +29,26 @@ class ViewController: UIViewController {
         
         // Set UILabels to invisible
         hideLabels()
+        hideGuessFlipsTextField()
         
         // Display start button
         showStartButton()
+    }
+    
+    // Function: hideGuessFlipsTextField()
+    // Args: None
+    // Returns: Void
+    // Description: Void function sets guessFlipsTextField to transparent
+    func hideGuessFlipsTextField() {
+        guessFlipsTextField.alpha = 0.0
+    }
+    
+    // Function: showGuessFlipsTextField()
+    // Args: None
+    // Returns: Void
+    // Description: Void function shows guessFlipsTextField
+    func showGuessFlipsTextField() {
+        guessFlipsTextField.alpha = 1.0
     }
     
     // Function: hideLabels()
@@ -128,7 +146,7 @@ class ViewController: UIViewController {
     // Function: MyGyro()
     // Args: None
     // Returns: Void
-    // Description: Gets gyroscope data from device and sets maxSpeed with rad/sec
+    // Description: Gets gyroscope data from device
     func MyGyro() {
         
         // Flag to track min speed satisfied
@@ -273,6 +291,29 @@ class ViewController: UIViewController {
                 
     }
     
+    // Function: deviceIsUp()
+    // Args: Double Array stores attitude data
+    // Returns: Bool
+    // Description: Takes array arg of attitude data on y-axis and returns
+    // bool True if last array element has position within finish line range.
+    func deviceIsUp(_ rotationArray: [Double]) -> Bool {
+        
+        if rotationArray.count != 0 {
+            let lastElement = rotationArray.count - 1   // Last element in array
+            
+            // Device attitude on y-axis in radians
+            let position = rotationArray[lastElement]
+            
+            // Return true if last position up
+            if inFinishLineRange(position) {
+                return true
+            }
+
+        }
+        
+        return false
+    }
+    
     // Function: showResults()
     // Args: None
     // Returns: Void
@@ -318,6 +359,26 @@ class ViewController: UIViewController {
         // Clear rotation data stored in array
         rotationData.removeAll()
     }
+    
+    // Action: User selects game mode
+    // Description:
+    @IBAction func gameModeOptionSlider(_ sender: UISegmentedControl) {
+        
+        let gameMode = sender.selectedSegmentIndex
+        
+        switch gameMode {
+        case 0:
+            hideGuessFlipsTextField()
+        case 1:
+            hideGuessFlipsTextField()
+        case 2:
+            showGuessFlipsTextField()
+        default:
+            hideGuessFlipsTextField()
+        }
+        
+    }
+    
     
     // Action: User presses start button
     // Description: Set labels to invisible.  Call all motion functions.
