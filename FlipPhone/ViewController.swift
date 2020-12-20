@@ -362,7 +362,7 @@ class ViewController: UIViewController {
         }
         
         // Set num rotations label to total rotations
-        numRotationsLabel.text = String("\(numRotations) rotation\(changeToPlural)")
+        numRotationsLabel.text = String("\(numRotations) flip\(changeToPlural)")
         
         // Display labels
         showLabels()
