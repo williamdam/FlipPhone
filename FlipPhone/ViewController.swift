@@ -26,9 +26,12 @@ class ViewController: UIViewController {
     var motion = CMMotionManager()      // Init motion manager
     var audioPlayer: AVAudioPlayer?     // Init audio player for chime
     
+    var sensorMessage = ""
+    var alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapToDismissKeyboard))
                 view.addGestureRecognizer(tap) // Add gesture recognizer to background view
         
@@ -38,6 +41,31 @@ class ViewController: UIViewController {
         
         // Display start button
         showStartButton()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if !motion.isDeviceMotionAvailable || !motion.isAccelerometerAvailable || !motion.isGyroAvailable {
+            
+            if !motion.isDeviceMotionAvailable {
+                sensorMessage.append("\n Device Motion ")
+            }
+            if !motion.isAccelerometerAvailable {
+                sensorMessage.append("\n Accelerometer ")
+            }
+            if !motion.isGyroAvailable {
+                sensorMessage.append("\n Gyro ")
+            }
+            
+            alert = UIAlertController(title: "Phone Sensors Unavailable", message: sensorMessage, preferredStyle: .alert)
+            
+            // alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        
     }
     
     // Function: hideGuessFlipsTextField()
@@ -120,7 +148,7 @@ class ViewController: UIViewController {
         let halfwayPoint = 3.14     // pi rad = 180 degrees
         
         // Checkpoint located at pi radians, +/- 0.2 rad
-        if abs(radians) > (halfwayPoint - 0.2) && abs(radians) < (halfwayPoint + 0.2) {
+        if abs(radians) > (halfwayPoint - 0.23) && abs(radians) < (halfwayPoint + 0.23) {
             
             return true
             
@@ -140,7 +168,7 @@ class ViewController: UIViewController {
         let finishLine = 0.0     // 0.0 radians
         
         // Checkpoint located at pi radians, +/- 0.2 rad
-        if abs(radians) > (finishLine - 0.25) && abs(radians) < (finishLine + 0.25) {
+        if abs(radians) > (finishLine - 0.27) && abs(radians) < (finishLine + 0.27) {
             
             return true
             
@@ -498,7 +526,7 @@ class ViewController: UIViewController {
         hideLabels()
         
         alwaysUpFlips = 0
-        
+                
         // Start all motion devices
         if !motion.isDeviceMotionActive {
             MyAttitude()
