@@ -11,6 +11,7 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var flipItLabel: UIView!
     @IBOutlet weak var gameModeTitle: UILabel!
     @IBOutlet weak var gameModeSlider: UISegmentedControl!  // Slider of Game Modes
     @IBOutlet weak var guessFlipsTextField: UITextField!
@@ -39,6 +40,7 @@ class ViewController: UIViewController {
                 view.addGestureRecognizer(tap) // Add gesture recognizer to background view
         
         // Set UILabels to invisible
+        flipItLabel.isHidden = true
         hideLabels()
         hideGuessFlipsTextField()
         
@@ -140,6 +142,8 @@ class ViewController: UIViewController {
             guessFlipsTextField.isHidden = true
         }
         
+        flipItLabel.isHidden = false
+        
     }
     
     // Function: showAfterFlip()
@@ -156,6 +160,8 @@ class ViewController: UIViewController {
             gameModeSlider.isHidden = false
             guessFlipsTextField.isHidden = false
         }
+        
+        flipItLabel.isHidden = true
         
     }
     

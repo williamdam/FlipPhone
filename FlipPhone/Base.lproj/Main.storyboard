@@ -242,6 +242,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="flipItLabel" destination="Nua-i5-ZNW" id="ltB-Hv-FOm"/>
                         <outlet property="gameModeSlider" destination="wmh-7l-jF7" id="wMb-9i-PZu"/>
                         <outlet property="gameModeTitle" destination="vfU-UT-3j0" id="H8a-ZH-bQ6"/>
                         <outlet property="greetingLabel" destination="DNV-ZX-fJ5" id="8gO-HE-Mmf"/>
