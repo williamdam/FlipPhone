@@ -12,6 +12,7 @@ import AVFoundation
 class ViewController: UIViewController {
 
     @IBOutlet weak var flipItLabel: UIView!                 // Flip it label
+    @IBOutlet weak var alwaysUpInstructionsLabel: UIView!
     @IBOutlet weak var gameModeTitle: UILabel!              // Title above slider
     @IBOutlet weak var gameModeSlider: UISegmentedControl!  // Slider of Game Modes
     @IBOutlet weak var guessFlipsTextField: UITextField!    // Text field for guess flips
@@ -44,6 +45,7 @@ class ViewController: UIViewController {
         
         // Set UILabels to invisible
         flipItLabel.isHidden = true
+        alwaysUpInstructionsLabel.isHidden = true
         hideLabels()
         hideGuessFlipsTextField()
         
@@ -160,7 +162,6 @@ class ViewController: UIViewController {
         }
         
         flipItLabel.isHidden = false        // Show flip it label
-        
     }
     
     // Function: showAfterFlip()
@@ -270,7 +271,7 @@ class ViewController: UIViewController {
                     
                     // Show results
                     self.showResults()
-                                        
+                    
                     minSpeedReached = false
                     
                 }
@@ -479,12 +480,13 @@ class ViewController: UIViewController {
             alwaysUpFlips += 1
             greetingLabel.text = "Nice! Keep going."
             self.playSound(sound: "chime", type: "mp3")
-            
+            alwaysUpInstructionsLabel.isHidden = false
         }
         else {
             stopCounting()
             greetingLabel.text = "Aw, you didn't land it."
             self.playSound(sound: "alert", type: "mp3")
+            alwaysUpInstructionsLabel.isHidden = true
             showStartButton()
             rotationData.removeAll()
         }
