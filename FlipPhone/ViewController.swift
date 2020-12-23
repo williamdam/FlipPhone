@@ -208,7 +208,7 @@ class ViewController: UIViewController {
         let halfwayPoint = 3.14     // pi rad = 180 degrees
         
         // Checkpoint located at pi radians, +/- 0.2 rad
-        if abs(radians) > (halfwayPoint - 0.25) && abs(radians) < (halfwayPoint + 0.25) {
+        if abs(radians) > (halfwayPoint - 0.49) && abs(radians) <= halfwayPoint {
             
             return true
             
@@ -228,7 +228,7 @@ class ViewController: UIViewController {
         let finishLine = 0.0     // 0.0 radians
         
         // Checkpoint located at pi radians, +/- 0.2 rad
-        if abs(radians) > (finishLine - 0.28) && abs(radians) < (finishLine + 0.28) {
+        if abs(radians) >= finishLine && abs(radians) < (finishLine + 0.49) {
             
             return true
             
@@ -270,13 +270,13 @@ class ViewController: UIViewController {
                     
                     // Show results
                     self.showResults()
-                    
+                                        
                     minSpeedReached = false
                     
                 }
                 
                 // Stop count and display results when rotation stops
-                else if minSpeedReached == true && abs(trueData.rotationRate.y) < 0.1 {
+                else if self.gameMode != 1 && minSpeedReached == true && abs(trueData.rotationRate.y) < 0.1 {
                     
                     // Stop all motion data
                     self.stopCounting()
@@ -402,19 +402,6 @@ class ViewController: UIViewController {
     // bool True if last array element has position within finish line range.
     func deviceIsUp(_ rotationArray: [Double]) -> Bool {
         
-        /*if rotationArray.count != 0 {
-            let lastElement = rotationArray.count - 1   // Last element in array
-            
-            // Device attitude on y-axis in radians
-            let position = rotationArray[lastElement]
-            
-            // Return true if last position up
-            if inFinishLineRange(position) {
-                return true
-            }
-
-        }*/
-        
         var isUp: Bool = true              // Bool true if device face up
         var passedCheckpoint: Bool = false  // Bool true if passed checkpoint
         
@@ -485,8 +472,9 @@ class ViewController: UIViewController {
     }
     
     func gameMode1() {
-        
+                
         print(self.rotationData)
+        
         if deviceIsUp(rotationData) {
             alwaysUpFlips += 1
             greetingLabel.text = "Nice! Keep going."
