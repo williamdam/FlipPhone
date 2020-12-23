@@ -11,10 +11,10 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var flipItLabel: UIView!
-    @IBOutlet weak var gameModeTitle: UILabel!
+    @IBOutlet weak var flipItLabel: UIView!                 // Flip it label
+    @IBOutlet weak var gameModeTitle: UILabel!              // Title above slider
     @IBOutlet weak var gameModeSlider: UISegmentedControl!  // Slider of Game Modes
-    @IBOutlet weak var guessFlipsTextField: UITextField!
+    @IBOutlet weak var guessFlipsTextField: UITextField!    // Text field for guess flips
     @IBOutlet weak var startCountingButton: UIButton!       // Button Start
     @IBOutlet weak var stopCountingButton: UIButton!        // Button Stop
     @IBOutlet weak var greetingLabel: UILabel!              // Label Max Rotation Speed
@@ -28,14 +28,16 @@ class ViewController: UIViewController {
     var motion = CMMotionManager()      // Init motion manager
     var audioPlayer: AVAudioPlayer?     // Init audio player for chime
     
-    var sensorMessage = ""
+    var sensorMessage = ""              // String holds error message
     var alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Done button for number pad
         setupTextFields()
-                
+        
+        // Dismiss keyboard, tap anywhere
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapToDismissKeyboard))
                 view.addGestureRecognizer(tap) // Add gesture recognizer to background view
         
@@ -50,8 +52,10 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
+        // Check if motion services available, else popup alert.
         if !motion.isDeviceMotionAvailable || !motion.isAccelerometerAvailable || !motion.isGyroAvailable {
             
+            // Append message with service(s) unavailable
             if !motion.isDeviceMotionAvailable {
                 sensorMessage.append("\n Device Motion ")
             }
@@ -62,11 +66,13 @@ class ViewController: UIViewController {
                 sensorMessage.append("\n Gyro ")
             }
             
+            // Format alert window
             alert = UIAlertController(title: "Phone Sensors Unavailable", message: sensorMessage, preferredStyle: .alert)
             
-            // alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            // Okay button to quit
             alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
             
+            // Display alert
             self.present(alert, animated: true, completion: nil)
         }
         
@@ -78,7 +84,9 @@ class ViewController: UIViewController {
     // Returns: Void
     // Description: Void function hides guess field
     func hideGuessFlipsTextField() {
+        
         guessFlipsTextField.alpha = 0.0
+        
     }
     
     // Function: showGuessFlipsTextField()
@@ -94,19 +102,23 @@ class ViewController: UIViewController {
     // Function: showLabels()
     // Args: None
     // Returns: Void
-    // Description: Void function sets labels to full alpha
+    // Description: Void function shows labels
     func showLabels() {
+        
         greetingLabel.alpha = 1.0
         numRotationsLabel.alpha = 1.0
+        
     }
     
     // Function: hideLabels()
     // Args: None
     // Returns: Void
-    // Description: Void function sets labels to transparent
+    // Description: Void function hides labels
     func hideLabels() {
+        
         greetingLabel.alpha = 0.0
         numRotationsLabel.alpha = 0.0
+        
     }
     
     // Function: showStartButton()
@@ -114,8 +126,10 @@ class ViewController: UIViewController {
     // Returns: Void
     // Description: Shows start button and hides stop button
     func showStartButton() {
+        
         startCountingButton.alpha = 1.0
         stopCountingButton.alpha = 0.0
+        
     }
     
     // Function: showStopButton()
@@ -123,8 +137,10 @@ class ViewController: UIViewController {
     // Returns: Void
     // Description: Shows stop button and hides start button
     func showStopButton() {
+        
         startCountingButton.alpha = 0.0
         stopCountingButton.alpha = 1.0
+        
     }
     
     // Function: hideForFlip()
@@ -133,16 +149,16 @@ class ViewController: UIViewController {
     // Description: Hide before flip
     func hideForFlip() {
         
-        gameModeTitle.isHidden = true
-        gameModeSlider.isHidden = true
-        startCountingButton.isHidden = true
+        gameModeTitle.isHidden = true       // Hide game mode title
+        gameModeSlider.isHidden = true      // Hide game mode slider
+        startCountingButton.isHidden = true // Hide start button
         
+        // Hide guess flips
         if gameMode == 2 {
-            gameModeSlider.isHidden = true
             guessFlipsTextField.isHidden = true
         }
         
-        flipItLabel.isHidden = false
+        flipItLabel.isHidden = false        // Show flip it label
         
     }
     
@@ -152,16 +168,16 @@ class ViewController: UIViewController {
     // Description: Show after flip
     func showAfterFlip() {
         
-        gameModeTitle.isHidden = false
-        gameModeSlider.isHidden = false
-        startCountingButton.isHidden = false
+        gameModeTitle.isHidden = false      // Show game mode title
+        gameModeSlider.isHidden = false     // Show game mode slider
+        startCountingButton.isHidden = false// Show start button
         
+        // Show guess flips
         if gameMode == 2 {
-            gameModeSlider.isHidden = false
             guessFlipsTextField.isHidden = false
         }
         
-        flipItLabel.isHidden = true
+        flipItLabel.isHidden = true         // Hide flip it label
         
     }
     
@@ -191,7 +207,7 @@ class ViewController: UIViewController {
         let halfwayPoint = 3.14     // pi rad = 180 degrees
         
         // Checkpoint located at pi radians, +/- 0.2 rad
-        if abs(radians) > (halfwayPoint - 0.23) && abs(radians) < (halfwayPoint + 0.23) {
+        if abs(radians) > (halfwayPoint - 0.25) && abs(radians) < (halfwayPoint + 0.25) {
             
             return true
             
@@ -211,7 +227,7 @@ class ViewController: UIViewController {
         let finishLine = 0.0     // 0.0 radians
         
         // Checkpoint located at pi radians, +/- 0.2 rad
-        if abs(radians) > (finishLine - 0.27) && abs(radians) < (finishLine + 0.27) {
+        if abs(radians) > (finishLine - 0.28) && abs(radians) < (finishLine + 0.28) {
             
             return true
             
