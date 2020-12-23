@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     
     var gameMode: Int = 0               // 0 = max flips, 1 = always up, 2 = guess it
     var alwaysUpFlips: Int = 0          // Count number of times always up
+    var faceUp: Bool = false            // Did phone land face up
     var motion = CMMotionManager()      // Init motion manager
     var audioPlayer: AVAudioPlayer?     // Init audio player for chime
     
@@ -277,9 +278,6 @@ class ViewController: UIViewController {
                 // Stop count and display results when rotation stops
                 else if minSpeedReached == true && abs(trueData.rotationRate.y) < 0.1 {
                     
-                    // Display start button
-                    self.showStartButton()
-                    
                     // Stop all motion data
                     self.stopCounting()
                     
@@ -404,7 +402,7 @@ class ViewController: UIViewController {
     // bool True if last array element has position within finish line range.
     func deviceIsUp(_ rotationArray: [Double]) -> Bool {
         
-        if rotationArray.count != 0 {
+        /*if rotationArray.count != 0 {
             let lastElement = rotationArray.count - 1   // Last element in array
             
             // Device attitude on y-axis in radians
@@ -415,9 +413,32 @@ class ViewController: UIViewController {
                 return true
             }
 
+        }*/
+        
+        var isUp: Bool = true              // Bool true if device face up
+        var passedCheckpoint: Bool = false  // Bool true if passed checkpoint
+        
+        // Iterate array of rotatation data
+        for deviceAttitude in 0...rotationArray.count - 1 {
+            
+            // If in finish line and passed checkpoint, device is up
+            if inFinishLineRange(rotationArray[deviceAttitude]) {
+                if passedCheckpoint == true {
+                    isUp = true
+                    passedCheckpoint = false
+                }
+            }
+            
+            // If in checkpoint and passed finish line, device is down
+            else if inCheckPointRange(rotationArray[deviceAttitude]) {
+                if isUp == true {
+                    isUp = false
+                    passedCheckpoint = true
+                }
+            }
         }
         
-        return false
+        return isUp     // Return var bool true if device is up
     }
     
     func gameMode0() {
@@ -465,6 +486,7 @@ class ViewController: UIViewController {
     
     func gameMode1() {
         
+        print(self.rotationData)
         if deviceIsUp(rotationData) {
             alwaysUpFlips += 1
             greetingLabel.text = "Nice! Keep going."
@@ -575,7 +597,6 @@ class ViewController: UIViewController {
         
     }
     
-    
     // Action: User presses start button
     // Description: Set labels to invisible.  Call all motion functions.
     @IBAction func startCountingButtonPressed(_ sender: UIButton) {
@@ -591,6 +612,9 @@ class ViewController: UIViewController {
             MyGyro()
             MyAccel()
         }
+        
+        // Hide labels
+        hideLabels()
         
         
     }
