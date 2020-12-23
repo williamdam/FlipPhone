@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -67,7 +68,6 @@
                                                 </connections>
                                             </segmentedControl>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="wmh-7l-jF7" secondAttribute="trailing" id="MzK-DS-sFm"/>
                                             <constraint firstAttribute="bottom" secondItem="wmh-7l-jF7" secondAttribute="bottom" id="Rtl-sP-xY0"/>
@@ -118,7 +118,6 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="Jzt-Wz-dBm" firstAttribute="top" secondItem="Flq-lx-S6a" secondAttribute="top" constant="5" id="66N-xm-iUT"/>
                                             <constraint firstAttribute="bottom" secondItem="UQo-9f-Rhh" secondAttribute="bottom" constant="5" id="O4d-r6-8Gf"/>
@@ -203,7 +202,7 @@
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="1" green="0.99834428722125723" blue="0.93167259992193407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="background-color"/>
                         <constraints>
                             <constraint firstItem="TT2-8x-0O7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="9oD-Or-eXg"/>
                             <constraint firstItem="TT2-8x-0O7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Mqa-eg-51c"/>
@@ -228,6 +227,9 @@
     <resources>
         <image name="starburst-bottom" width="1400" height="232"/>
         <image name="starburst-top" width="1400" height="161"/>
+        <namedColor name="background-color">
+            <color red="0.95294117647058818" green="0.94901960784313721" blue="0.83137254901960778" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
