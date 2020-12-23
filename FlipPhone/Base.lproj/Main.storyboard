@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -41,7 +41,7 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a Mode to Play" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfU-UT-3j0">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -192,10 +192,8 @@
                                     <constraint firstAttribute="trailing" secondItem="sfF-n1-F5u" secondAttribute="trailing" id="Tjt-Y9-myi"/>
                                     <constraint firstItem="wTD-Et-Nrz" firstAttribute="leading" secondItem="TT2-8x-0O7" secondAttribute="leading" id="VfH-SH-MCp"/>
                                     <constraint firstItem="sfF-n1-F5u" firstAttribute="leading" secondItem="TT2-8x-0O7" secondAttribute="leading" id="WbO-dU-qu5"/>
-                                    <constraint firstAttribute="bottom" secondItem="zhA-pJ-gYN" secondAttribute="bottom" id="YIH-to-xnC"/>
                                     <constraint firstAttribute="trailing" secondItem="Flq-lx-S6a" secondAttribute="trailing" constant="50" id="i7G-sS-7X6"/>
                                     <constraint firstItem="xjg-QO-eLu" firstAttribute="leading" secondItem="TT2-8x-0O7" secondAttribute="leading" constant="50" id="n9z-XL-LF8"/>
-                                    <constraint firstItem="wTD-Et-Nrz" firstAttribute="top" secondItem="TT2-8x-0O7" secondAttribute="top" id="rj0-RD-DIA"/>
                                     <constraint firstItem="Flq-lx-S6a" firstAttribute="leading" secondItem="TT2-8x-0O7" secondAttribute="leading" constant="50" id="sCk-21-Rk9"/>
                                     <constraint firstAttribute="trailing" secondItem="cpj-tA-PYj" secondAttribute="trailing" id="u84-G6-e5z"/>
                                 </constraints>
@@ -228,7 +226,7 @@
         <image name="starburst-bottom" width="1400" height="232"/>
         <image name="starburst-top" width="1400" height="161"/>
         <namedColor name="background-color">
-            <color red="0.95294117647058818" green="0.94901960784313721" blue="0.83137254901960778" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.95300000905990601" green="0.94900000095367432" blue="0.83099997043609619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

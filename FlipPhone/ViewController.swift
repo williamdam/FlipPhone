@@ -31,6 +31,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupTextFields()
                 
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapToDismissKeyboard))
                 view.addGestureRecognizer(tap) // Add gesture recognizer to background view
@@ -111,6 +113,15 @@ class ViewController: UIViewController {
     func showStopButton() {
         startCountingButton.alpha = 0.0
         stopCountingButton.alpha = 1.0
+    }
+    
+    // Function: hideBothButtons()
+    // Args: None
+    // Returns: Void
+    // Description: Hides start and stop buttons
+    func hideBothButtons() {
+        startCountingButton.alpha = 0.0
+        stopCountingButton.alpha = 0.0
     }
     
     // Function: showLabels()
@@ -412,7 +423,7 @@ class ViewController: UIViewController {
         }
         else {
             stopCounting()
-            greetingLabel.text = "Aww. Face down."
+            greetingLabel.text = "Aw, you didn't land it."
             self.playSound(sound: "alert", type: "mp3")
             showStartButton()
             rotationData.removeAll()
@@ -452,7 +463,7 @@ class ViewController: UIViewController {
         }
         
         // Set num rotations label to total rotations
-        numRotationsLabel.text = String("\(numRotations) rotation\(changeToPlural)")
+        numRotationsLabel.text = String("\(numRotations) flip\(changeToPlural)")
         
         // Display labels
         showLabels()
@@ -520,7 +531,7 @@ class ViewController: UIViewController {
     @IBAction func startCountingButtonPressed(_ sender: UIButton) {
         
         // Display stop button
-        showStopButton()
+        hideBothButtons()
         
         // Make labels invisible
         hideLabels()
@@ -562,6 +573,22 @@ class ViewController: UIViewController {
         
     }
     
+    func setupTextFields() {
+            let toolbar = UIToolbar()
+            let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                            target: nil, action: nil)
+            let doneButton = UIBarButtonItem(title: "Done", style: .done,
+                                             target: self, action: #selector(doneButtonTapped))
+            
+            toolbar.setItems([flexSpace, doneButton], animated: true)
+            toolbar.sizeToFit()
+            
+            guessFlipsTextField.inputAccessoryView = toolbar
+        }
+        
+        @objc func doneButtonTapped() {
+            view.endEditing(true)
+        }
 }
 
 
