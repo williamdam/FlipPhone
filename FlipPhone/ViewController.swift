@@ -11,6 +11,7 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var gameModeTitle: UILabel!
     @IBOutlet weak var gameModeSlider: UISegmentedControl!  // Slider of Game Modes
     @IBOutlet weak var guessFlipsTextField: UITextField!
     @IBOutlet weak var startCountingButton: UIButton!       // Button Start
@@ -88,6 +89,15 @@ class ViewController: UIViewController {
         
     }
     
+    // Function: showLabels()
+    // Args: None
+    // Returns: Void
+    // Description: Void function sets labels to full alpha
+    func showLabels() {
+        greetingLabel.alpha = 1.0
+        numRotationsLabel.alpha = 1.0
+    }
+    
     // Function: hideLabels()
     // Args: None
     // Returns: Void
@@ -115,22 +125,38 @@ class ViewController: UIViewController {
         stopCountingButton.alpha = 1.0
     }
     
-    // Function: hideBothButtons()
+    // Function: hideForFlip()
     // Args: None
     // Returns: Void
-    // Description: Hides start and stop buttons
-    func hideBothButtons() {
-        startCountingButton.alpha = 0.0
-        stopCountingButton.alpha = 0.0
+    // Description: Hide before flip
+    func hideForFlip() {
+        
+        gameModeTitle.isHidden = true
+        gameModeSlider.isHidden = true
+        startCountingButton.isHidden = true
+        
+        if gameMode == 2 {
+            gameModeSlider.isHidden = true
+            guessFlipsTextField.isHidden = true
+        }
+        
     }
     
-    // Function: showLabels()
+    // Function: showAfterFlip()
     // Args: None
     // Returns: Void
-    // Description: Void function sets labels to full alpha
-    func showLabels() {
-        greetingLabel.alpha = 1.0
-        numRotationsLabel.alpha = 1.0
+    // Description: Show after flip
+    func showAfterFlip() {
+        
+        gameModeTitle.isHidden = false
+        gameModeSlider.isHidden = false
+        startCountingButton.isHidden = false
+        
+        if gameMode == 2 {
+            gameModeSlider.isHidden = false
+            guessFlipsTextField.isHidden = false
+        }
+        
     }
     
     // Function: playSound()
@@ -302,6 +328,8 @@ class ViewController: UIViewController {
             motion.stopGyroUpdates()
             motion.stopAccelerometerUpdates()
         }
+        
+        showAfterFlip()
         
         // Play chime
         // self.playSound(sound: "chime", type: "mp3")
@@ -530,11 +558,8 @@ class ViewController: UIViewController {
     // Description: Set labels to invisible.  Call all motion functions.
     @IBAction func startCountingButtonPressed(_ sender: UIButton) {
         
-        // Display stop button
-        hideBothButtons()
-        
-        // Make labels invisible
-        hideLabels()
+        // Hide everything when flipping
+        hideForFlip()
         
         alwaysUpFlips = 0
                 
