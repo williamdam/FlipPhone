@@ -296,7 +296,7 @@ class ViewController: UIViewController {
     // Args: None
     // Returns: Void
     // Description: Gets accelerometer data from device and sets maxG with number of G's
-    func MyAccel() {
+    /*func MyAccel() {
         
         // Check for change every 0.01 sec
         motion.accelerometerUpdateInterval = 0.01
@@ -311,7 +311,7 @@ class ViewController: UIViewController {
             }
             
         }
-    }
+    }*/
     
     // Function: MyAttitude()
     // Args: None
@@ -347,7 +347,7 @@ class ViewController: UIViewController {
         if motion.isDeviceMotionActive {
             motion.stopDeviceMotionUpdates()
             motion.stopGyroUpdates()
-            motion.stopAccelerometerUpdates()
+            //motion.stopAccelerometerUpdates()
         }
         
         showAfterFlip()
@@ -600,7 +600,7 @@ class ViewController: UIViewController {
         if !motion.isDeviceMotionActive {
             MyAttitude()
             MyGyro()
-            MyAccel()
+            //MyAccel()
         }
         
         // Hide labels
