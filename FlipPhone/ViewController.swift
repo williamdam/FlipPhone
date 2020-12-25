@@ -209,7 +209,7 @@ class ViewController: UIViewController {
         let halfwayPoint = 3.14     // pi rad = 180 degrees
         
         // Checkpoint located at pi radians, +/- 0.2 rad
-        if abs(radians) > (halfwayPoint - 0.49) && abs(radians) <= halfwayPoint {
+        if abs(radians) > (halfwayPoint - 0.49) {
             
             return true
             
@@ -229,7 +229,7 @@ class ViewController: UIViewController {
         let finishLine = 0.0     // 0.0 radians
         
         // Checkpoint located at pi radians, +/- 0.2 rad
-        if abs(radians) >= finishLine && abs(radians) < (finishLine + 0.49) {
+        if abs(radians) < (finishLine + 0.49) {
             
             return true
             
@@ -261,7 +261,7 @@ class ViewController: UIViewController {
                 print("Rotation rate y: \(trueData.rotationRate.y)")
                 
                 // Set min speed flag true if min speed reached
-                if minSpeedReached == false && trueData.rotationRate.y > 7 {
+                if minSpeedReached == false && abs(trueData.rotationRate.y) > 7 {
                     
                     minSpeedReached = true
                     
