@@ -261,7 +261,7 @@ class ViewController: UIViewController {
                 print("Rotation rate y: \(trueData.rotationRate.y)")
                 
                 // Set min speed flag true if min speed reached
-                if minSpeedReached == false && abs(trueData.rotationRate.y) > 7 {
+                if minSpeedReached == false && abs(trueData.rotationRate.y) > 6 {
                     
                     minSpeedReached = true
                     
@@ -492,11 +492,11 @@ class ViewController: UIViewController {
         }
         
         // Amend string with singular or plural
-        var changeToPlural = "s"
+        var changeToPlural = "es"
         if alwaysUpFlips == 1 {
             changeToPlural = ""
         }
-        numRotationsLabel.text = String("\(alwaysUpFlips) flip\(changeToPlural)")
+        numRotationsLabel.text = String("\(alwaysUpFlips) toss\(changeToPlural)")
         
         showLabels()
     }
